@@ -11,23 +11,34 @@ except:
 
 class SocketServer:
 
-    def __init__(self, bind_ip = config.BIND_IP, bind_port = config.BIND_PORT,
-                 max_concurrent_connections = config.MAX_CONCURRENT_CONNECTIONS):
+    def __init__(self, bind_ip = config.BIND_IP, bind_port = config.BIND_PORT):
 
         # self.bind_address = socket.getaddrinfo(bind_ip, bind_port)[-1][-1] 
         self.bind_address = (bind_ip, bind_port)
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket.bind(self.bind_address)
-        self.socket.listen(max_concurrent_connections)
 
+        self.socket = None
         self.channel = None
         self.client_address = None
         self.is_stopped = True
         self.subscribers = []
 
+        self.init()
+
 
     def __del__(self):
+        self._close_sockets()
+
+
+    def init(self):
+        self._close_sockets()
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket.bind(self.bind_address)
+        self.socket.listen(config.MAX_CONCURRENT_CONNECTIONS)
+
+
+    def _close_sockets(self):
         if self.channel:
             self.channel.close()
             self.channel = None
@@ -37,7 +48,13 @@ class SocketServer:
             self.socket = None
 
 
+    @property
+    def ip_address(self):
+        return socket.gethostbyname(socket.gethostname()), self.bind_address[1]
+
+
     def run(self):
+        self.init()
         self.listen()
 
 

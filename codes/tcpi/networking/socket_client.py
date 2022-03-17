@@ -118,4 +118,5 @@ class SocketClient:
 
 
     def send(self, data):
+        # assert self.socket is not None, 'Not connected.'
         self.socket.sendall(data)

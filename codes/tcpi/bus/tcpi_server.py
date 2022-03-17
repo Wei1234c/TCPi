@@ -33,22 +33,25 @@ class TCPiServer(SocketServer):
 
 
 
-class I2C(TCPiServer):
-    I2C_ADDRESSes = {1: 0x68 >> 1,
-                     2: 0xA0 >> 1}
+class Bus(TCPiServer):
 
-
-    def __init__(self, bus, class_finder, i2c_addresses = I2C_ADDRESSes, **kwargs):
+    def __init__(self, bus, class_finder, **kwargs):
         super().__init__(**kwargs)
 
         self._bus = bus
-        self._i2c_addresses = i2c_addresses
         self._class_finder = class_finder
-
         self.actions = {CONTROL_CODES['Write']      : self.write,
                         CONTROL_CODES['ReadRequest']: self.read}
 
         self.add_subscriber(self._process_data)
+
+
+    def write(self, packet):
+        raise NotImplementedError
+
+
+    def read(self, packet_request):
+        raise NotImplementedError
 
 
     def _load_packet_data(self, cls, data):
@@ -79,6 +82,18 @@ class I2C(TCPiServer):
                 break
 
         collect_garbage()
+
+
+
+class I2C(Bus):
+    I2C_ADDRESSes = {1: 0x68 >> 1,
+                     2: 0xA0 >> 1}
+
+
+    def __init__(self, bus, class_finder, i2c_addresses = I2C_ADDRESSes, **kwargs):
+        super().__init__(bus, class_finder, **kwargs)
+
+        self._i2c_addresses = i2c_addresses
 
 
     def _get_i2c_address(self, packet):
