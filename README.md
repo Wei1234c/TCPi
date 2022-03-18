@@ -11,7 +11,7 @@
     
 
 ## Why?
-- I was [playing with ADI SigmaDSP (ADAU1701/ADAU1401)](https://github.com/Wei1234c/SigmaDSP), and often need to switch between USBi and [FTDI FT232H](https://www.google.com/search?q=ftdi+ft232h&sxsrf=APq-WBvh8jByLE89c5v9AHCrUAZXqxOAmA:1646325613903&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjCrZrrsKr2AhVL05QKHeoaD4gQ_AUoAXoECAEQAw&biw=1396&bih=585&dpr=1.38).
+- I was [playing with SigmaDSP (ADAU1701/ADAU1401)](https://github.com/Wei1234c/SigmaDSP), and often need to switch between USBi and [FTDI FT232H](https://www.google.com/search?q=ftdi+ft232h&sxsrf=APq-WBvh8jByLE89c5v9AHCrUAZXqxOAmA:1646325613903&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjCrZrrsKr2AhVL05QKHeoaD4gQ_AUoAXoECAEQAw&biw=1396&bih=585&dpr=1.38).
 - With SigmaDSP TCP/IP channel, SigmaStudio and Python program can share the same channel to access SigmaDSP, no more switching.
 - Remote access is always a huge advantage.
 
@@ -48,7 +48,7 @@
         - The default port number is 8086.
         - You can write `import test_tcpi_upy` into file `main.py`, so it will run as a Sigma TCP/IP channel server after each boot.
     - Follow [AD's instruction](https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/tcpipchannels_) to connect to the server.
-- Please also see [here](https://github.com/Wei1234c/TCPi/tree/master/notebooks/Functional%20test) and [here](https://github.com/Wei1234c/TCPi/tree/master/codes/test/pc) for examples.  
+- Please also see [here](https://github.com/Wei1234c/TCPi/tree/master/notebooks/Functional%20test) and [here](https://github.com/Wei1234c/TCPi/tree/master/codes/test/pc) for other examples.  
 
 
 ## Test Results
