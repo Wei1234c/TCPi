@@ -85,6 +85,7 @@ class Bus(TCPiClient):
         bytes_response = self.receive()
 
         if bytes_response:
+            assert bytes_response != b''
             return self._read_bytes(bytes_response)
 
 

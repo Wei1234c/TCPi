@@ -129,8 +129,8 @@ class PacketData(Packet):
         return b''.join([e.bytes for e in self._elements]) + self.data
 
 
-    def print(self):
-        len_name_field = super().print()
+    def print(self, as_hex = False):
+        len_name_field = super().print(as_hex)
         print(f'{"[ Data ]":<{len_name_field + 5}s}:  {[b for b in self.data]}')
         print(f'{"[ Data in Hex ]":<{len_name_field + 5}s}:  {[hex(b) for b in self.data]}')
 

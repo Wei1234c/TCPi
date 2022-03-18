@@ -1,17 +1,16 @@
-# coding: utf-8
-
 import time
+
+import config
 import machine
-import hardware
 
 
-on_board_led = machine.Pin(hardware.ON_BOARD_LED_PIN_NO, machine.Pin.OUT)
-on_board_led.value(0 if hardware.ON_BOARD_LED_HIGH_IS_ON else 1)  # LED off
+on_board_led = machine.Pin(config.ON_BOARD_LED_PIN_NO, machine.Pin.OUT)
+on_board_led.value(0 if config.ON_BOARD_LED_HIGH_IS_ON else 1)  # LED off
 
 
 
 def blink_on_board_led(times = 1, forever = False, on_seconds = 0.5, off_seconds = 0.5):
-    blink(on_board_led, times, forever, on_seconds, off_seconds, hardware.ON_BOARD_LED_HIGH_IS_ON)
+    blink(on_board_led, times, forever, on_seconds, off_seconds, config.ON_BOARD_LED_HIGH_IS_ON)
 
 
 

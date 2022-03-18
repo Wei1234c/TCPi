@@ -87,7 +87,7 @@ class SocketServer:
 
 
     def on_accept(self):
-        print(f'\n[Connect from client {self.client_address} established.]')
+        print(f'\n[Connection from client {self.client_address} established.]')
 
         while True:
             if self.stopped:

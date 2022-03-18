@@ -8,7 +8,7 @@ except:
 
 class PacketData:
 
-    def modify(self):
+    def __init__(self):
         self.elements['Total_length'].n_bits = 8 * 4
         self.elements['Data_length'].n_bits = 8 * 4
         self.data = self.data
@@ -16,7 +16,6 @@ class PacketData:
 
 
 class PacketReadRequest(protocol.PacketReadRequest):
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -33,24 +32,22 @@ class PacketReadRequest(protocol.PacketReadRequest):
 
 class PacketReadResponse(protocol.PacketReadResponse, PacketData):
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._elements.append(protocol.Element(name = 'Reserved', idx_lowest_bit = 0, n_bits = 8 * 2, value = 0))
         self.elements = self._elements
 
-        self.modify()
+        PacketData.__init__(self)
 
 
 
 class PacketWrite(protocol.PacketWrite, PacketData):
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.modify()
+        PacketData.__init__(self)
 
 
 

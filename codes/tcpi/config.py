@@ -10,6 +10,18 @@ IS_MICROPYTHON = sys.implementation.name == 'micropython'
 
 # DEBUG_MODE = True
 
+# Hardware **********************
+ON_BOARD_LED_PIN_NO = 5
+ON_BOARD_LED_HIGH_IS_ON = False
+
+# Avoid some pins of ESP32,
+# see: https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
+I2C_SCL_PIN_ID = 17
+I2C_SDA_PIN_ID = 16
+
+# WiFi **********************
+SSID = 'SSID'
+PASSWORD = 'PASSWORD'
 
 # Shared ************************
 BUFFER_SIZE = 1024 * 10  # ADAU1701 needs 9332 bytes to accommodate full update from SigmaStudio.
@@ -21,7 +33,7 @@ MAX_CONCURRENT_CONNECTIONS = 20
 
 # Socket Client ************************
 SERVER_IP = '127.0.0.1'
-SERVER_PORT = 8086
+SERVER_PORT = BIND_PORT
 CLIENT_RETRY_TO_CONNECT_AFTER_SECONDS = 3
 CLIENT_RECEIVE_TIME_OUT_SECONDS = 1
 MICROPYTHON_SOCKET_CONNECTION_RESET_ERROR_MESSAGE = '[Errno 104] ECONNRESET'

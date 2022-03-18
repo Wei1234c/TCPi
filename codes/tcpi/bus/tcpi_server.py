@@ -3,12 +3,6 @@ import gc
 
 try:
     from .. import config
-
-except:
-    import config
-
-try:
-    from .. import config
     from ..protocols.protocol import CONTROL_CODES
     from ..networking.socket_server import SocketServer
 
@@ -22,9 +16,7 @@ except:
 
 def collect_garbage():
     gc.collect()
-
-    if config.IS_MICROPYTHON:
-        print('\n[Memory - free: {}   allocated: {}]'.format(gc.mem_free(), gc.mem_alloc()))
+    print('\n[Memory - free: {}   allocated: {}]'.format(gc.mem_free(), gc.mem_alloc()))
 
 
 
@@ -54,9 +46,10 @@ class Bus(TCPiServer):
         raise NotImplementedError
 
 
-    def _load_packet_data(self, cls, data):
+    @staticmethod
+    def _load_packet_data(cls_packet, data):
 
-        packet = cls()
+        packet = cls_packet()
         remains = packet.load_bytes(data)
         packet.print()
 
@@ -64,9 +57,6 @@ class Bus(TCPiServer):
 
 
     def _process_data(self, data):
-
-        if config.IS_MICROPYTHON:
-            led.blink_on_board_led(times = 1, forever = False, on_seconds = 0.003, off_seconds = 0.0)
 
         while len(data) > 0:
             control_code = data[0]
@@ -81,7 +71,9 @@ class Bus(TCPiServer):
                 print('Unknown data: ', data)
                 break
 
-        collect_garbage()
+        if config.IS_MICROPYTHON:
+            led.blink_on_board_led(times = 1, forever = False, on_seconds = 0.003, off_seconds = 0.0)
+            collect_garbage()
 
 
 
@@ -116,7 +108,7 @@ class I2C(Bus):
         cls = self._class_finder[CONTROL_CODES['ReadResponse']]
         packet_response = cls(chip_address = packet_request.elements['Chip_address'].value,
                               sub_address = packet_request.elements['Address'].value,
-                              data = result, success = True)
+                              data = result if result is not None else b'', success = result is not None)
         packet_response.print()
         self.send(packet_response.bytes)
 
