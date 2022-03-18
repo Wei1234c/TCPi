@@ -25,10 +25,10 @@
     - A PC running Python program
     - An ESP32 running MicroPython
 - A server can be:
-    - A PC with Python enviornment
+    - A PC with Python environment
         - Using USB-I2C converter (like FTDI FT232H) to access SigmaDSP.
-        - [Using USBi as an USB-I2C converter](https://github.com/Wei1234c/USBi) to access SigmaDSP.        
-    - An ESP32 with MicroPython enviornment 
+        - [Using USBi as a USB-I2C converter](https://github.com/Wei1234c/USBi) to access SigmaDSP.        
+    - An ESP32 with MicroPython environment 
         - Using its I2C port to access SigmaDSP.  
 
 
@@ -43,11 +43,11 @@
             - Avoid some pins of ESP32, see [ESP32 GPIO guide](https://randomnerdtutorials.com/esp32-pinout-reference-gpios/).
         - WiFi:
             - SSID, PASSWORD 
-    - Upload all file to ESP32.
-    - In ESP32's terminal interface, type `import test_tcpi_upy`, it will show it's IP when WiFi connection is established.
+    - Upload all files to ESP32.
+    - In ESP32's terminal interface, type `import test_tcpi_upy`, it will show its IP when the WiFi connection is established.
         - The default port number is 8086.
         - You can write `import test_tcpi_upy` into file `main.py`, so it will run as a Sigma TCP/IP channel server after each boot.
-    - Follow [AD's instruction](https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/tcpipchannels_) to connect to the server.
+    - Follow [AD's instructions](https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/tcpipchannels_) to connect to the server.
 - Please also see [here](https://github.com/Wei1234c/TCPi/tree/master/notebooks/Functional%20test) and [here](https://github.com/Wei1234c/TCPi/tree/master/codes/test/pc) for other examples.  
 
 
@@ -63,7 +63,7 @@
 
 ## Limitations
 - Not high speed, obvious latency. 
-- Need more memory to accommdate the data SigmaStudio uploads all at once. ESP32 with 8MB PSRAM is preferred.
+- Need more memory to accommodate the data SigmaStudio uploads all at once. ESP32 with 8MB PSRAM is preferred.
 
 ## Dependencies
 - [Utilities](https://github.com/Wei1234c/Utilities)
