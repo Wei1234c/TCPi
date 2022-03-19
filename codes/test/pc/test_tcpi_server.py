@@ -6,7 +6,7 @@ from tcpi.bus.tcpi_server import I2C as TcpI2C
 from tcpi.protocols.TCPIP1701 import class_finder
 
 
-with_hardware_device = True
+with_hardware_device = False
 
 if with_hardware_device:
     ctrl = I2cController()
@@ -18,11 +18,10 @@ else:
 bus = adapters.I2C(i2c = _i2c)
 tcpi_server = TcpI2C(bus, class_finder, i2c_addresses = {1: 0x68 >> 1, 2: 0xA0 >> 1})
 print(tcpi_server.ip_address)
+
 # tcpi_server.run()
-
-
 t_server = threading.Thread(target = tcpi_server.run)
 t_server.start()
 
 tcpi_server.stop()
-t_server.join()
+# t_server.join()

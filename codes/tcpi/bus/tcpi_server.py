@@ -4,12 +4,12 @@ import gc
 try:
     from .. import config
     from ..protocols.protocol import CONTROL_CODES
-    from ..networking.socket_server import SocketServer
+    from ..networking.socket_server_concurrent import SocketServer
 
 except:
     import config
     from protocol import CONTROL_CODES
-    from socket_server import SocketServer
+    from socket_server_concurrent import SocketServer
     import led
 
 

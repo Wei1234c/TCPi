@@ -2,7 +2,8 @@ import threading
 import time
 
 from tcpi.networking.socket_client import SocketClient
-from tcpi.networking.socket_server import SocketServer
+# from tcpi.networking.socket_server import SocketServer
+from tcpi.networking.socket_server_concurrent import SocketServer
 from tcpi.protocols.TCPIP1701 import class_finder, PacketReadResponse, PacketReadRequest
 
 
@@ -33,22 +34,19 @@ def show_packet(data):
 # server  ==================================
 server.add_subscriber(show_packet)
 t_server = threading.Thread(target = server.run)
-
-client = SocketClient()
-t_client = threading.Thread(target = client.run)
-
 t_server.start()
+# server.run()
 time.sleep(1)
-t_client.start()
-time.sleep(2)
+
+# client ===================================
+client = SocketClient()
+client.connect()
+time.sleep(1)
 
 packet = PacketReadRequest(chip_address = 1, sub_address = 8, n_bytes = 4)
 client.send(packet.bytes)
 
-# client.close_connection()
-
-server.stop()
 client.stop()
+server.stop()
 
 t_server.join()
-t_client.join()

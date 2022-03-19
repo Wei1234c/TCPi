@@ -1,6 +1,8 @@
 import threading
+import time
 
-from tcpi.networking.socket_server import SocketServer
+# from tcpi.networking.socket_server import SocketServer
+from tcpi.networking.socket_server_concurrent import SocketServer
 from tcpi.protocols.TCPIP1701 import class_finder, PacketReadResponse
 
 
@@ -25,10 +27,11 @@ def show_packet(data):
 
 server = SocketServer()
 server.add_subscriber(show_packet)
-# server.run()
 
+# server.run()
 t_server = threading.Thread(target = server.run)
 t_server.start()
+time.sleep(1)
 
 server.stop()
 t_server.join()
