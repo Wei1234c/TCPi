@@ -45,6 +45,8 @@ time.sleep(2)
 packet = PacketReadRequest(chip_address = 1, sub_address = 8, n_bytes = 4)
 client.send(packet.bytes)
 
+# client.close_connection()
+
 server.stop()
 client.stop()
 

@@ -12,9 +12,11 @@ class TCPiClient(SocketClient):
 
     def connect(self, server_ip = config.SERVER_IP, server_port = config.SERVER_PORT):
         self.set_server_address(server_ip, server_port)
-        print(f'\n[Connecting server: {self.server_address}]')
 
         try:
+            self.close_connection()
+
+            print(f'\n[Connecting server: {self.server_address}]')
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect(self.server_address)
             self.on_connect()

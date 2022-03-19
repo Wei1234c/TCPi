@@ -6,7 +6,7 @@
         - With SigmaStudio or Python program.
     - Use ESP32 / PC as a client.
     - Use ESP32 / PC as the server. 
-    - Can also **read data from** SigmaDSP over TCP/IP channel.
+    - Can also **read data from** SigmaDSP over TCP/IP channel (with Python program).
     - Can read/write **EEPROM**.
     
 
@@ -19,7 +19,7 @@
 - Coverage of SigmaDSP's memory space:
     - Can access data of program RAM, parameter RAM, and also **EEPROM**, just assign the address to read/write.
 - Can also read data from SigmaDSP
-    - Not only writing data to, but can also **read data from** SigmaDSP via TCP/IP channel.
+    - Not only writing data to, but can also **read data from** SigmaDSP via TCP/IP channel (with Python program).
 - A client can be:
     - A PC running SigmaStudio
     - A PC running Python program

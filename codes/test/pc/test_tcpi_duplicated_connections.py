@@ -43,7 +43,6 @@ time.sleep(1)
 tcpi_client.write_addressed_bytes(i2c_address = 0x34, sub_address = 0x08, bytes_array = bytes([0, 0, 0, 1]))
 print(tcpi_client.read_addressed_bytes(i2c_address = 0x34, sub_address = 0x08, n_bytes = 4))
 
-
 print('====================== re-connecting ==========================')
 tcpi_client.connect(*tcpi_server.ip_address)
 print('====================== re-connected ==========================')
@@ -54,7 +53,6 @@ print(tcpi_client.read_addressed_bytes(i2c_address = 0x34, sub_address = 0x08, n
 tcpi_client.write_addressed_bytes(i2c_address = 0x34, sub_address = 0x08, bytes_array = bytes([0, 0, 0, 0]))
 print(tcpi_client.read_addressed_bytes(i2c_address = 0x34, sub_address = 0x08, n_bytes = 4))
 
-tcpi_client.stop()
 tcpi_client.stop()
 tcpi_server.stop()
 t_server.join()

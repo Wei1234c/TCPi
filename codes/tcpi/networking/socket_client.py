@@ -35,7 +35,7 @@ class SocketClient:
     def stop(self):
         print('\n[Client set to stop.]')
         self.is_stopped = True
-        self.socket.close()
+        self.close_connection ()
 
 
     @property
@@ -105,8 +105,9 @@ class SocketClient:
     def close_connection(self):
         if self.socket:
             self.socket.close()
+            self.socket = None
 
-        self.on_close()
+            self.on_close()
 
 
     def on_close(self):

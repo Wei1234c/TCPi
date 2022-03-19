@@ -78,8 +78,13 @@ class Bus(TCPiServer):
 
 
 class I2C(Bus):
-    I2C_ADDRESSes = {1: 0x68 >> 1,
-                     2: 0xA0 >> 1}
+    I2C_ADDRESS = 0x68 >> 1
+    I2C_ADDRESS_EEPROM = 0xA0 >> 1
+
+    I2C_ADDRESSes = {1                 : (I2C_ADDRESS, 2),  # (i2c_addresses, n_sub_address_bytes)
+                     2                 : (I2C_ADDRESS_EEPROM, 2),
+                     I2C_ADDRESS       : (I2C_ADDRESS, 2),
+                     I2C_ADDRESS_EEPROM: (I2C_ADDRESS_EEPROM, 2)}
 
 
     def __init__(self, bus, class_finder, i2c_addresses = I2C_ADDRESSes, **kwargs):
@@ -90,20 +95,24 @@ class I2C(Bus):
 
     def _get_i2c_address(self, packet):
         addr = packet.elements['Chip_address'].value
-        return self._i2c_addresses[addr] if addr in self.I2C_ADDRESSes else addr
+        return self._i2c_addresses[addr] if addr in self.I2C_ADDRESSes else (addr, 1)
 
 
     def write(self, packet):
-        self._bus.write_addressed_bytes(i2c_address = self._get_i2c_address(packet),
+        i2c_address, n_sub_address_bytes = self._get_i2c_address(packet)
+        self._bus.write_addressed_bytes(i2c_address = i2c_address,
                                         sub_address = packet.elements['Address'].value,
-                                        bytes_array = packet.data)
+                                        bytes_array = packet.data,
+                                        n_sub_address_bytes = n_sub_address_bytes)
 
 
     def read(self, packet_request):
         # hardware read =================
-        result = self._bus.read_addressed_bytes(i2c_address = self._get_i2c_address(packet_request),
+        i2c_address, n_sub_address_bytes = self._get_i2c_address(packet_request)
+        result = self._bus.read_addressed_bytes(i2c_address = i2c_address,
                                                 sub_address = packet_request.elements['Address'].value,
-                                                n_bytes = packet_request.elements['Data_length'].value)
+                                                n_bytes = packet_request.elements['Data_length'].value,
+                                                n_sub_address_bytes = n_sub_address_bytes)
         # send response packet ==========
         cls = self._class_finder[CONTROL_CODES['ReadResponse']]
         packet_response = cls(chip_address = packet_request.elements['Chip_address'].value,

@@ -63,6 +63,7 @@ class SocketServer:
         self.is_stopped = True
         self.disconnect_client()
         self.socket.close()
+        self.socket = None
 
 
     @property
@@ -124,7 +125,7 @@ class SocketServer:
         if self.channel:
             self.channel.close()
             self.channel = None
-        self.on_client_disconnected()
+            self.on_client_disconnected()
 
 
     def on_client_disconnected(self):
