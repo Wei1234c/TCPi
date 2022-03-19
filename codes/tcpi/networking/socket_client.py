@@ -13,7 +13,6 @@ class SocketClient:
 
     def __init__(self):
         self.socket = None
-        self.set_server_address()
         self.subscribers = []
 
 
@@ -46,8 +45,6 @@ class SocketClient:
         self.set_server_address(server_ip, server_port)
 
         try:
-            # self.close_connection()
-
             print(f'\n[Connecting server: {self.server_address}]')
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect(self.server_address)
