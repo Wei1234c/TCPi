@@ -47,7 +47,7 @@
     - In ESP32's terminal interface, type `import test_tcpi_upy`, it will show its IP when the WiFi connection is established.
         - The default port number is 8086.
         - You can write `import test_tcpi_upy` into file `main.py`, so it will run as a Sigma TCP/IP channel server after each boot.
-    - Follow [AD's instructions](https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/tcpipchannels_) to connect to the server.
+    - Follow [AD's instructions](https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/tcpipchannels_) for connecting the server with SigmaStudio.
 - Please also see [here](https://github.com/Wei1234c/TCPi/tree/master/notebooks/Functional%20test) and [here](https://github.com/Wei1234c/TCPi/tree/master/codes/test/pc) for other examples.  
 
 
