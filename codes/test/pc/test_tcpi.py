@@ -43,7 +43,6 @@ time.sleep(1)
 tcpi_client.write_addressed_bytes(i2c_address = 0x34, sub_address = 0x08, bytes_array = bytes([0, 0, 0, 1]))
 print(tcpi_client.read_addressed_bytes(i2c_address = 0x34, sub_address = 0x08, n_bytes = 4))
 
-
 print('====================== re-connecting ==========================')
 tcpi_client = TcpI2C_client(class_finder)
 tcpi_client.connect(*tcpi_server.ip_address)

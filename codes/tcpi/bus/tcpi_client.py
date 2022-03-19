@@ -1,6 +1,6 @@
 try:
     from ..protocols.protocol import CONTROL_CODES
-    from ..networking.socket_client import SocketClient, socket, time, config
+    from ..networking.socket_client import SocketClient, socket, config
 
 except:
     from protocol import CONTROL_CODES
