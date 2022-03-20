@@ -1,5 +1,5 @@
 # SigmaStudio TCPIP Channel Tools Box
-![](https://raw.githubusercontent.com/Wei1234c/TCPi/master/jpgs/Sigma%20TCPi%20server.png)
+[![](https://raw.githubusercontent.com/Wei1234c/TCPi/master/jpgs/Sigma%20TCPi%20server.png)](https://youtu.be/fecBbvJBepI) 
 ## What is this?
 - This is a Python package, with which you can:
     - Remotely control SigmaDSP through TCP/IP channel.

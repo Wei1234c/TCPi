@@ -2,8 +2,7 @@ import threading
 import time
 
 from tcpi.networking.socket_client import SocketClient
-# from tcpi.networking.socket_server import SocketServer
-from tcpi.networking.socket_server_concurrent import SocketServer
+from tcpi.networking.socket_server import SocketServer
 from tcpi.protocols.TCPIP1701 import class_finder, PacketReadResponse, PacketReadRequest
 
 

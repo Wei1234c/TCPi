@@ -4,12 +4,12 @@ import gc
 try:
     from .. import config
     from ..protocols.protocol import CONTROL_CODES
-    from ..networking.socket_server_concurrent import SocketServer
+    from ..networking.socket_server import SocketServer
 
 except:
     import config
     from protocol import CONTROL_CODES
-    from socket_server_concurrent import SocketServer
+    from socket_server import SocketServer
     import led
 
 
@@ -72,7 +72,8 @@ class Bus(TCPiServer):
                 break
 
         if config.IS_MICROPYTHON:
-            led.blink_on_board_led(times = 1, forever = False, on_seconds = 0.003, off_seconds = 0.0)
+            led.blink_on_board_led(times = 1, forever = False,
+                                   on_seconds = config.LED_ON_ms / 1e3, off_seconds = config.LED_OFF_ms / 1e3)
             collect_garbage()
 
 

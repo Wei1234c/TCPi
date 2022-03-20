@@ -1,5 +1,7 @@
 import socket
 
+import select
+
 
 try:
     from .. import config
@@ -12,15 +14,15 @@ except:
 class SocketServer:
 
     def __init__(self, bind_ip = config.BIND_IP, bind_port = config.BIND_PORT):
+        super().__init__()
 
-        # self.bind_address = socket.getaddrinfo(bind_ip, bind_port)[-1][-1] 
         self.bind_address = (bind_ip, bind_port)
 
+        self.socket_being_read = None
         self.socket = None
-        self.channel = None
-        self.client_address = None
         self.is_stopped = True
         self.subscribers = []
+        self.clients = {}
 
         self.init()
 
@@ -39,10 +41,6 @@ class SocketServer:
 
 
     def _close_sockets(self):
-        if self.channel:
-            self.channel.close()
-            self.channel = None
-
         if self.socket:
             self.socket.close()
             self.socket = None
@@ -61,14 +59,15 @@ class SocketServer:
     def stop(self):
         print('\n[Server set to stop ]')
         self.is_stopped = True
-        self.disconnect_client()
+        self.disconnect_clients()
         self.socket.close()
         self.socket = None
 
 
-    @property
-    def stopped(self):
-        return self.is_stopped
+    def disconnect_clients(self):
+        for k in self.clients.keys():
+            self.clients[k].close()
+            self.clients[k] = None
 
 
     def listen(self):
@@ -76,40 +75,58 @@ class SocketServer:
         self.is_stopped = False
 
         while True:
-            if self.stopped:
+            if self.is_stopped:
                 break
 
-            try:
-                self.channel, self.client_address = self.socket.accept()
-                self.on_accept()
+            # generate list of sockets
+            sockets = list(self.clients.values())
+            sockets.append(self.socket)
 
-            except Exception as e:
-                print(e)
+            # select
+            list_to_read, _, _ = select.select(sockets, [], [], config.SERVER_POLLING_REQUEST_TIMEOUT_SECONDS)
+
+            # process tasks
+            for self.socket_being_read in list_to_read:
+                # new connection
+                if self.socket_being_read is self.socket:
+                    try:
+                        self.on_accept()
+                        # connections list has changed
+                        # need to escape for loop to re-generate the new list of sockets
+                        break
+
+                    except OSError as e:
+                        print(f'<{e.__class__.__name__}> : {e}')
+                        break
+                else:
+                    # try to receive data
+                    try:
+                        data = self.socket_being_read.recv(config.BUFFER_SIZE)
+                        if len(data) == 0:
+                            self.on_close()
+                            # connections list has changed
+                            # need to escape for loop to re-generate the new list of sockets
+                            break
+
+                        self.on_receive(data)
+
+                    except Exception as e:
+                        print(f'<{e.__class__.__name__}> : {e}')
+
+                        if config.IS_MICROPYTHON:
+                            if str(e) == config.MICROPYTHON_SOCKET_CONNECTION_RESET_ERROR_MESSAGE:
+                                self.on_close()
+                                break
+                        elif isinstance(e, ConnectionResetError):
+                            self.on_close()
+                            break
 
 
     def on_accept(self):
-        print(f'\n[Connection from client {self.client_address} established.]')
+        the_socket, client_address = self.socket.accept()
+        print(f'\n[Connection from client {client_address} established.]')
 
-        while True:
-            if self.stopped:
-                break
-
-            try:
-                data = self.channel.recv(config.BUFFER_SIZE)
-
-                if len(data) == 0:
-                    self.disconnect_client()
-                    break
-
-                self.on_receive(data)
-
-            except OSError as e:
-                print(f'<{e.__class__.__name__}> : {e}')
-                self.disconnect_client()
-                break
-
-            except Exception as e:
-                print(f'<{e.__class__.__name__}> : {e}')
+        self.clients[client_address] = the_socket
 
 
     def on_receive(self, data):
@@ -121,15 +138,14 @@ class SocketServer:
                 func(data)
 
 
-    def disconnect_client(self):
-        if self.channel:
-            self.channel.close()
-            self.channel = None
-            self.on_client_disconnected()
-
-
-    def on_client_disconnected(self):
-        print(f'\n[Connection with client {self.client_address} is closed.]')
+    def on_close(self):
+        for k, s in self.clients.items():
+            if s is self.socket_being_read:
+                print(f'\n[Connection with client {k} is closed.]')
+                s.close()
+                self.clients[k] = None
+                del self.clients[k]
+                break
 
 
     def add_subscriber(self, func):
@@ -137,4 +153,4 @@ class SocketServer:
 
 
     def send(self, data):
-        self.channel.sendall(data)
+        self.socket_being_read.sendall(data)

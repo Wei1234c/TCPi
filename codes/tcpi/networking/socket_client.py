@@ -22,7 +22,7 @@ class SocketClient:
             self.socket = None
 
 
-    def set_server_address(self, server_ip = config.SERVER_IP, server_port = config.SERVER_PORT):
+    def set_server_address(self, server_ip, server_port):
         self.server_address = socket.getaddrinfo(server_ip, server_port)[-1][-1]
 
 
@@ -41,7 +41,7 @@ class SocketClient:
         return self.is_stopped
 
 
-    def connect(self, server_ip = config.SERVER_IP, server_port = config.SERVER_PORT):
+    def connect(self, server_ip, server_port = config.SERVER_PORT):
         self.set_server_address(server_ip, server_port)
 
         try:
