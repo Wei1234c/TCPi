@@ -12,14 +12,18 @@
 
 ## Why?
 - I was [playing with SigmaDSP (ADAU1701/ADAU1401)](https://github.com/Wei1234c/SigmaDSP), and often need to switch between USBi and [FTDI FT232H](https://www.google.com/search?q=ftdi+ft232h&sxsrf=APq-WBvh8jByLE89c5v9AHCrUAZXqxOAmA:1646325613903&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjCrZrrsKr2AhVL05QKHeoaD4gQ_AUoAXoECAEQAw&biw=1396&bih=585&dpr=1.38).
-- With SigmaDSP TCP/IP channel, SigmaStudio and Python program can share the same channel to access SigmaDSP, no more switching.
-- Remote access is always a huge advantage.
+- With SigmaDSP TCP/IP channel, SigmaStudio and Python programs can share the same means to access SigmaDSP, no more switching.
+- Remote access is always a huge advantage:
+	- Can control any SigmaDSP no matter where it is, as long as it's TCP/IP reachable. Very convenient for maintenance.
+	- Configuration can be deployed over multiple SigmaDSP devices automatically, with just a few lines of code.
 
 ## Design and Features
 - Coverage of SigmaDSP's memory space:
     - Can access data of program RAM, parameter RAM, and also **EEPROM**, just assign the address to read/write.
 - Can also read data from SigmaDSP
     - Not only writing data to, but can also **read data from** SigmaDSP via TCP/IP channel (with Python program).
+- Support **reset** command:
+	- With ESP32 as the server, SigmaDSP and ESP32 itself will be reset upon the "reset" command is received.
 - A client can be:
     - A PC running SigmaStudio
     - A PC running Python program
