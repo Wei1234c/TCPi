@@ -30,7 +30,7 @@ PASSWORD = 'PASSWORD'
 BUFFER_SIZE = 1024 * 10  # ADAU1701 needs 9332 bytes to accommodate full update from SigmaStudio.
 
 # Socket Server ***************************
-CMD_RESET = bytes([82, 101, 115, 101, 116])  # 'Reset'
+CMD_RESET = b'Reset'
 BIND_IP = '0.0.0.0'  # the ip which broker listens to.
 BIND_PORT = 8086
 MAX_CONCURRENT_CONNECTIONS = 20

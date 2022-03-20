@@ -15,21 +15,22 @@
 - With SigmaDSP TCP/IP channel, SigmaStudio and Python programs can share the same means to access SigmaDSP, no more switching.
 - Remote access is always a huge advantage:
 	- Can control any SigmaDSP no matter where it is, as long as it's TCP/IP reachable. Very convenient for maintenance.
-	- Configuration can be deployed over multiple SigmaDSP devices automatically, with just a few lines of code.
-	- No need to squeeze huge code into to a tiny MCU (like ESP32), parameters can be calculated remotely and deployed onto devices.
-	- UI controls (like push buttons) no more need to be "on-device", you can contol SigmaDSP with just your phone.
+	- Configurations can be modified and deployed over multiple SigmaDSP devices on-demand, with just a few lines of code.
+	- No need to squeeze huge code into a tiny MCU (like ESP32), parameters can be calculated remotely and deployed onto devices.
+	- UI controls (like push buttons) no more need to be "on-device", you can control SigmaDSP with just your phone.
 
 ## Design and Features
 - Coverage of SigmaDSP's memory space:
     - Can access data of program RAM, parameter RAM, and also **EEPROM**, just assign the address to read/write.
 - Can also read data from SigmaDSP
     - Not only writing data to, but can also **read data from** SigmaDSP via TCP/IP channel (with Python program).
-- Support **reset** command:
-	- With ESP32 as the server, SigmaDSP and ESP32 itself will be reset upon the "reset" command is received.
+- Support **"reset"** command:
+	- With ESP32 as the server, SigmaDSP and ESP32 itself will be reset upon receiving the "reset" command.
 - A client can be:
     - A PC running SigmaStudio
     - A PC running Python program
     - An ESP32 running MicroPython
+	- A smart phone
 - A server can be:
     - A PC with Python environment
         - Using USB-I2C converter (like FTDI FT232H) to access SigmaDSP.
