@@ -16,6 +16,8 @@
 - Remote access is always a huge advantage:
 	- Can control any SigmaDSP no matter where it is, as long as it's TCP/IP reachable. Very convenient for maintenance.
 	- Configuration can be deployed over multiple SigmaDSP devices automatically, with just a few lines of code.
+	- No need to squeeze huge code into to a tiny MCU (like ESP32), parameters can be calculated remotely and deployed onto devices.
+	- UI controls (like push buttons) no more need to be "on-device", you can contol SigmaDSP with just your phone.
 
 ## Design and Features
 - Coverage of SigmaDSP's memory space:
