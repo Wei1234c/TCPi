@@ -37,6 +37,8 @@
         - [Using USBi as a USB-I2C converter](https://github.com/Wei1234c/USBi) to access SigmaDSP.        
     - An ESP32 with MicroPython environment 
         - Using its I2C port to access SigmaDSP.  
+- Portability:
+	- The same package can be used on PC / ESP32 without modification required.
 
 
 ## How to use it
