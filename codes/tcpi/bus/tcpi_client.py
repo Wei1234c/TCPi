@@ -1,3 +1,6 @@
+import json
+
+
 try:
     from ..protocols.protocol import CONTROL_CODES
     from ..networking.socket_client import SocketClient, socket, config
@@ -9,7 +12,27 @@ except:
 
 
 class TCPiClient(SocketClient):
-    pass
+
+    def get_server_properties(self):
+        self.send(config.CMD_GET_PROTERTIES)
+        bytes_response = self.receive()
+
+        if bytes_response:
+            return json.loads(bytes_response.decode())
+
+
+    def set_server_properties(self, properties):
+        self.send(config.CMD_SET_PROTERTIES + f' = {json.dumps(properties)}'.encode())
+
+
+    def get_server_property(self, property_name):
+        return self.get_server_properties().get(property_name)
+
+
+    def set_server_property(self, property_name, value):
+        properties = self.get_server_properties()
+        properties[property_name] = value
+        self.set_server_properties(properties)
 
 
 

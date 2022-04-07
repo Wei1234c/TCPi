@@ -1,4 +1,5 @@
 import gc
+import json
 
 
 try:
@@ -10,7 +11,6 @@ except:
     import config
     from protocol import CONTROL_CODES
     from socket_server import SocketServer
-    import led
 
 
 
@@ -21,7 +21,33 @@ def collect_garbage():
 
 
 class TCPiServer(SocketServer):
-    pass
+    PROPERTIES_FILE_NAME = 'properties.json'
+
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.add_subscriber(self._propertize)
+
+
+    @property
+    def properties(self):
+        with open(self.PROPERTIES_FILE_NAME, 'tr') as f:
+            return json.load(f)
+
+
+    @properties.setter
+    def properties(self, properties):
+        with open(self.PROPERTIES_FILE_NAME, 'tw') as f:
+            json.dump(properties, f)
+
+
+    def _propertize(self, data):
+        if data == config.CMD_GET_PROTERTIES:
+            self.send(json.dumps(self.properties).encode())
+
+        if data[:len(config.CMD_SET_PROTERTIES)] == config.CMD_SET_PROTERTIES:
+            self.properties = json.loads(data.decode().split('=')[-1].strip())
 
 
 
@@ -72,8 +98,6 @@ class Bus(TCPiServer):
                 break
 
         if config.IS_MICROPYTHON:
-            led.blink_on_board_led(times = 1, forever = False,
-                                   on_seconds = config.LED_ON_ms / 1e3, off_seconds = config.LED_OFF_ms / 1e3)
             collect_garbage()
 
 

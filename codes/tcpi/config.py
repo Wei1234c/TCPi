@@ -19,7 +19,7 @@ LED_OFF_ms = 0
 # Avoid some pins of ESP32,
 # see: https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
 I2C_SCL_PIN_ID = 17
-I2C_SDA_PIN_ID = 16
+I2C_SDA_PIN_ID = 5
 RESET_PIN_ID = 13
 
 # WiFi **********************
@@ -31,6 +31,8 @@ BUFFER_SIZE = 1024 * 10  # ADAU1701 needs 9332 bytes to accommodate full update 
 
 # Socket Server ***************************
 CMD_RESET = b'Reset'
+CMD_SET_PROTERTIES = b'SetProterties'
+CMD_GET_PROTERTIES = b'GetProterties'
 BIND_IP = '0.0.0.0'  # the ip which broker listens to.
 BIND_PORT = 8086
 MAX_CONCURRENT_CONNECTIONS = 20

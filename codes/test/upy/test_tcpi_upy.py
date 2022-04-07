@@ -11,6 +11,7 @@ from wifi import wait_for_wifi
 
 # pin_reset ======================
 pin_reset = machine.Pin(config.RESET_PIN_ID, machine.Pin.OUT)
+pin_reset.value(1)
 
 
 
@@ -21,12 +22,7 @@ def reset_adau():
 
 
 
-reset_adau()
-
 # hardware bus ======================
-
-pin_reset = machine.Pin(config.RESET_PIN_ID, machine.Pin.OUT)
-pin_reset.value(1)
 
 wait_for_wifi()
 
@@ -39,6 +35,7 @@ else:
     _i2c = None  # using None for testing without actual hardware device.
 
 bus = adapters.I2C(_i2c)
+reset_adau()
 
 # =================================
 
