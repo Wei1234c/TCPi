@@ -3,10 +3,10 @@
 ## What is this?
 - This is a Python package, with which you can:
     - Remotely control SigmaDSP through TCP/IP channel.
-        - With SigmaStudio or Python program.
+        - With SigmaStudio or Python programs.
     - Use ESP32 / PC as a client.
     - Use ESP32 / PC as the server. 
-    - Can also **read data from** SigmaDSP over TCP/IP channel (with Python program).
+    - Can also **read data from** SigmaDSP over TCP/IP channel (with Python programs).
     - Can read/write **EEPROM**.
     
 
@@ -23,12 +23,12 @@
 - Coverage of SigmaDSP's memory space:
     - Can access data of program RAM, parameter RAM, and also **EEPROM**, just assign the address to read/write.
 - Can also read data from SigmaDSP
-    - Not only writing data to, but can also **read data from** SigmaDSP via TCP/IP channel (with Python program).
+    - Not only writing data to, but can also **read data from** SigmaDSP via TCP/IP channel (with Python programs).
 - Support **"reset"** command:
 	- With ESP32 as the server, SigmaDSP and ESP32 itself will be reset upon receiving the "reset" command.
 - A client can be:
     - A PC running SigmaStudio
-    - A PC running Python program
+    - A PC running Python programs
     - An ESP32 running MicroPython
 	- A smart phone
 - A server can be:
@@ -62,7 +62,7 @@
 
 ## Test Results
 - [Control SigmaDSP with SigmaStudio through TCP/IP Channel, using ESP32 as the server](https://youtu.be/fecBbvJBepI) 
-- [Control SigmaDSP with Python program through TCP/IP Channel, using ESP32 as the server](https://youtu.be/0D95nNcjJ2Q)
+- [Control SigmaDSP with Python programs through TCP/IP Channel, using ESP32 as the server](https://youtu.be/0D95nNcjJ2Q)
     
 ## Supported Chips
 - ADAU1701
