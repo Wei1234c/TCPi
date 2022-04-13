@@ -17,6 +17,7 @@ else:
 
 bus = adapters.I2C(i2c = _i2c)
 tcpi_server = TcpI2C(bus, class_finder, i2c_addresses = {1: 0x68 >> 1, 2: 0xA0 >> 1})
+tcpi_server.DEBUG_MODE = True
 print(tcpi_server.ip_address)
 
 # tcpi_server.run()

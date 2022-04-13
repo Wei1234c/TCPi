@@ -7,6 +7,7 @@ from tcpi.protocols.TCPIP1701 import class_finder, PacketReadResponse, PacketRea
 
 
 server = SocketServer()
+server.DEBUG_MODE = True
 
 
 

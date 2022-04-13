@@ -56,6 +56,8 @@ def process_data(data):
 
 
 tcpi_server = TcpI2C(bus, class_finder, i2c_addresses = I2C_ADDRESSes)
+tcpi_server.DEBUG_MODE = True
+
 tcpi_server.add_subscriber(process_data)
 
 tcpi_server.run()

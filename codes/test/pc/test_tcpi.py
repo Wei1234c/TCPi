@@ -29,6 +29,7 @@ I2C_ADDRESSes = {1                 : (I2C_ADDRESS, 2),  # (i2c_addresses, n_sub_
                  I2C_ADDRESS_EEPROM: (I2C_ADDRESS_EEPROM, 2)}
 
 tcpi_server = TcpI2C_server(bus, class_finder, i2c_addresses = I2C_ADDRESSes)
+tcpi_server.DEBUG_MODE = True
 print(tcpi_server.ip_address)
 t_server = threading.Thread(target = tcpi_server.run)
 t_server.start()

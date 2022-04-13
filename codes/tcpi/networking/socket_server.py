@@ -12,6 +12,8 @@ except:
 
 
 class SocketServer:
+    DEBUG_MODE = False
+
 
     def __init__(self, bind_ip = config.BIND_IP, bind_port = config.BIND_PORT):
         super().__init__()
@@ -130,8 +132,10 @@ class SocketServer:
 
 
     def on_receive(self, data):
-        print(f'\n[Server receiving: {len(data)} bytes of data.]')
-        print([b for b in data])
+
+        if self.DEBUG_MODE:
+            print(f'\n[Server receiving: {len(data)} bytes of data.]')
+            print([b for b in data])
 
         if data:
             for func in self.subscribers:

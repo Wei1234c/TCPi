@@ -14,12 +14,6 @@ except:
 
 
 
-def collect_garbage():
-    gc.collect()
-    print('\n[Memory - free: {}   allocated: {}]'.format(gc.mem_free(), gc.mem_alloc()))
-
-
-
 class TCPiServer(SocketServer):
     PROPERTIES_FILE_NAME = 'properties.json'
 
@@ -74,10 +68,8 @@ class Bus(TCPiServer):
 
     @staticmethod
     def _load_packet_data(cls_packet, data):
-
         packet = cls_packet()
         remains = packet.load_bytes(data)
-        packet.print()
 
         return packet, remains
 
@@ -90,6 +82,10 @@ class Bus(TCPiServer):
 
             if cls:
                 packet, data = self._load_packet_data(cls, data)
+
+                if self.DEBUG_MODE:
+                    packet.print()
+
                 action = self.actions[control_code]
                 action(packet)
 
@@ -98,7 +94,10 @@ class Bus(TCPiServer):
                 break
 
         if config.IS_MICROPYTHON:
-            collect_garbage()
+            gc.collect()
+
+            if self.DEBUG_MODE:
+                print('\n[Memory - free: {}   allocated: {}]'.format(gc.mem_free(), gc.mem_alloc()))
 
 
 
@@ -143,7 +142,10 @@ class I2C(Bus):
         packet_response = cls(chip_address = packet_request.elements['Chip_address'].value,
                               sub_address = packet_request.elements['Address'].value,
                               data = result if result is not None else b'', success = result is not None)
-        packet_response.print()
+
+        if self.DEBUG_MODE:
+            packet_response.print()
+
         self.send(packet_response.bytes)
 
         return result

@@ -25,6 +25,7 @@ def show_packet(data):
 
 
 server = SocketServer()
+server.DEBUG_MODE = True
 server.add_subscriber(show_packet)
 
 # server.run()
