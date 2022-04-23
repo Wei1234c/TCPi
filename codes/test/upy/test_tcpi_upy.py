@@ -10,7 +10,7 @@ from wifi import wait_for_wifi
 
 
 # pin_reset ======================
-pin_reset = machine.Pin(config.RESET_PIN_ID, machine.Pin.OUT)
+pin_reset = machine.Pin(config.RESET_PIN_ID, machine.Pin.OPEN_DRAIN)
 pin_reset.value(1)
 
 
@@ -37,7 +37,7 @@ else:
 bus = adapters.I2C(_i2c)
 reset_adau()
 
-# =================================
+# tcpi_server =======================
 
 I2C_ADDRESS = 0x68 >> 1
 I2C_ADDRESS_EEPROM = 0xA0 >> 1
@@ -45,6 +45,9 @@ I2C_ADDRESSes = {1                 : (I2C_ADDRESS, 2),  # (i2c_addresses, n_sub_
                  2                 : (I2C_ADDRESS_EEPROM, 2),
                  I2C_ADDRESS       : (I2C_ADDRESS, 2),
                  I2C_ADDRESS_EEPROM: (I2C_ADDRESS_EEPROM, 2)}
+
+tcpi_server = TcpI2C(bus, class_finder, i2c_addresses = I2C_ADDRESSes)
+tcpi_server.DEBUG_MODE = False
 
 
 
@@ -54,9 +57,6 @@ def process_data(data):
         machine.reset()
 
 
-
-tcpi_server = TcpI2C(bus, class_finder, i2c_addresses = I2C_ADDRESSes)
-tcpi_server.DEBUG_MODE = True
 
 tcpi_server.add_subscriber(process_data)
 
