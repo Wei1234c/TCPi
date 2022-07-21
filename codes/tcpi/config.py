@@ -31,6 +31,7 @@ BUFFER_SIZE = 1024 * 10  # ADAU1701 needs 9332 bytes to accommodate full update 
 
 # Socket Server ***************************
 CMD_RESET = b'Reset'
+CMD_RESET_DSP = b'Reset_DSP'
 CMD_SET_PROTERTIES = b'SetProterties'
 CMD_GET_PROTERTIES = b'GetProterties'
 BIND_IP = '0.0.0.0'  # the ip which broker listens to.

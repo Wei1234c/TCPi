@@ -52,6 +52,9 @@ tcpi_server.DEBUG_MODE = False
 
 
 def process_data(data):
+    if data == config.CMD_RESET_DSP:
+        reset_adau()
+
     if data == config.CMD_RESET:
         reset_adau()
         machine.reset()
